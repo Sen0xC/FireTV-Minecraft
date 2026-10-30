@@ -7,8 +7,8 @@ Projectivy réserve le fond personnel à Premium. Pour le besoin de ce projet, u
 Après construction, depuis le terminal à la racine du projet :
 
 ```powershell
-.\tools\platform-tools\adb.exe -s 192.168.1.10:5555 install .\dist\AccueilVoxel.apk
-.\tools\platform-tools\adb.exe -s 192.168.1.10:5555 shell am start -n fr.local.voxelhome/.MainActivity
+.\tools\platform-tools\adb.exe -s 192.168.x.xx:5555 install .\dist\AccueilVoxel.apk
+.\tools\platform-tools\adb.exe -s 192.168.x.xx:5555 shell am start -n fr.local.voxelhome/.MainActivity
 ```
 
 Cela ajoute l'accueil gratuit sans retirer Projectivy ni modifier le bouton Accueil Amazon. Les tests télécommande, paramètres et lancement des quatre applications doivent être réalisés sur l'appareil.
@@ -37,7 +37,7 @@ La seconde commande demande confirmation avant téléchargement dans `tools/`, d
 Sur **Fire OS confirmé**, activer Débogage ADB dans Options développeur. Si le menu est caché, sélectionner sept fois le nom de l'appareil dans À propos. PC et TV doivent être sur le même réseau local. [Instructions ADB Amazon](https://developer.amazon.com/docs/fire-tv/developer-tools.html).
 
 ```powershell
-.\setup.ps1 -Connect -DeviceIP 192.168.1.50
+.\setup.ps1 -Connect -DeviceIP 192.168.x.xx
 ```
 
 Remplacer l'adresse par celle de votre TV. Confirmer Fire OS, puis la connexion à cette adresse. Accepter la clé RSA sur la TV. Le script vérifie ensuite fabricant et API Android. Il cible toujours explicitement cet appareil, même si plusieurs appareils sont connectés. Aucun balayage du réseau.
