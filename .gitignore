@@ -2,3 +2,6 @@ tools/
 reports/
 journal/
 session.json
+dist/
+launcher/build/
+*.apk

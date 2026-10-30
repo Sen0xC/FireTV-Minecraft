@@ -1,5 +1,18 @@
 # Fire TV — accueil voxel et optimisation prudente
 
+## Installer l'accueil voxel gratuit
+
+Projectivy réserve le fond personnel à Premium. Pour le besoin de ce projet, un accueil Kotlin gratuit est maintenant fourni avec le fond inclus et les quatre applications choisies. [Guide court de l'accueil Voxel](launcher/README.md).
+
+Après construction, depuis le terminal à la racine du projet :
+
+```powershell
+.\tools\platform-tools\adb.exe -s 192.168.1.10:5555 install .\dist\AccueilVoxel.apk
+.\tools\platform-tools\adb.exe -s 192.168.1.10:5555 shell am start -n fr.local.voxelhome/.MainActivity
+```
+
+Cela ajoute l'accueil gratuit sans retirer Projectivy ni modifier le bouton Accueil Amazon. Les tests télécommande, paramètres et lancement des quatre applications doivent être réalisés sur l'appareil.
+
 Outils Windows PowerShell 5.1 / PowerShell 7. Aucune modification de la TV par défaut. Aucune connexion ou suppression automatique. Aucun root, modification de partition, blocage réseau, désactivation de service ou de mise à jour. Les rapports contiennent des identifiants privés : ne pas les publier sans les relire.
 
 ## 1. Identifier le système avant la connexion
@@ -57,7 +70,7 @@ Dans Projectivy, si la version installée le permet : choisir le fond local, cr�
 
 Tester les directions, OK, Retour, l'ouverture de chaque application et l'accès aux paramètres Amazon. **Privilégier le lancement manuel depuis les applications Amazon.** Ne pas activer de redirection Accueil, service d'accessibilité ou outil Launcher Manager sans étude du firmware. Un [signalement sur le dépôt Projectivy](https://github.com/spocky/miproja1/issues/338) décrit des lenteurs et problèmes d'accès aux paramètres sur un firmware précis ; ce n'est pas une preuve universelle de compatibilité. Le bouton Accueil doit continuer à ouvrir Amazon. Retour à l'interface Amazon : bouton Accueil ; désinstallation facultative de Projectivy depuis les paramètres.
 
-Le développement Kotlin est différé jusqu'au test réel de personnalisation de Projectivy et à l'identification de l'API. Aucun APK personnalisé non testé n'est fourni.
+Après identification réelle d'Android 9/API 28 et constat de la limitation Premium du fond personnel, un accueil Kotlin est fourni dans `launcher/`. Il inclut gratuitement le fond voxel local. La construction et la signature sont vérifiables sur PC ; la validation d'exécution reste à réaliser sur la TV.
 
 ## 5. Publicités et performances
 

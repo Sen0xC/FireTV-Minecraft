@@ -1,6 +1,16 @@
 {
-  "keep": [],
+  "keep": [
+    "com.stremio.one",
+    "com.amazon.firetv.youtube",
+    "com.crunchyroll.crunchyroid",
+    "fr.anidn"
+  ],
   "uninstall": [],
-  "labels": {},
+  "labels": {
+    "com.stremio.one": "Stremio",
+    "com.amazon.firetv.youtube": "YouTube",
+    "com.crunchyroll.crunchyroid": "Crunchyroll",
+    "fr.anidn": "ADN"
+  },
   "animationScale": null
 }

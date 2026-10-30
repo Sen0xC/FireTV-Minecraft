@@ -13,8 +13,18 @@ function Get-Adb {
 }
 function Invoke-Adb([string[]]$Arguments) {
     $exe = Get-Adb
-    $out = @(& $exe @Arguments 2>&1)
-    if ($LASTEXITCODE -ne 0) { throw ($out -join "`n") }
+    # Windows PowerShell transforme stderr en ErrorRecord, meme si ADB reussit.
+    # Capturer ces messages et juger uniquement le code de sortie du processus.
+    $savedPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        $PSNativeCommandUseErrorActionPreference = $false
+        $out = @(& $exe @Arguments 2>&1)
+        $exitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $savedPreference
+    }
+    if ($exitCode -ne 0) { throw "ADB (code $exitCode) : $($out -join "`n")" }
     return ($out -join "`n").Trim()
 }
 function Get-Session {

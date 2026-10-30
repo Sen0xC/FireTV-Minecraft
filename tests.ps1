@@ -21,3 +21,15 @@ Must-Reject @{keep=@();uninstall=@('org.absent.app')}
 if (@(Get-Plan @{keep=@();uninstall=@()} $fake).Count -ne 0) { throw 'Suppression implicite interdite.' }
 if (@(Get-Plan @{keep=@();uninstall=@('org.example.video')} $fake).Count -ne 1) { throw 'Plan explicite invalide.' }
 Write-Host 'OK : syntaxe PowerShell et 6 controles de plan. Aucun appel ADB.'
+# Simuler stderr avec un vrai processus, sans lancer ADB ni joindre la TV.
+& {
+    function Get-Adb { return (Get-Process -Id $PID).Path }
+    $result = Invoke-Adb @('-NoProfile','-Command','[Console]::Error.WriteLine("daemon starting"); [Console]::WriteLine("ok"); exit 0')
+    if ($result -notmatch 'daemon starting' -or $result -notmatch 'ok') { throw 'Capture stdout/stderr incomplete.' }
+    $failed = $false
+    try { Invoke-Adb @('-NoProfile','-Command','[Console]::Error.WriteLine("failure"); exit 7') | Out-Null }
+    catch { if ($_ -notmatch 'code 7') { throw }; $failed = $true }
+    if (!$failed) { throw 'Code de sortie en erreur ignore.' }
+    if ($ErrorActionPreference -ne 'Stop') { throw 'Preference appelante modifiee.' }
+}
+Write-Host 'OK : stderr accepte en cas de succes; code non nul toujours bloque.'
