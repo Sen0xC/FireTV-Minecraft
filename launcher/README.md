@@ -1,5 +1,9 @@
 # Accueil Voxel — gratuit et local
 
+## Version 1.3 — Stream+
+
+Cinquième application ajoutée : **Stream+**, package `com.hugo.streamplus`. La navigation utilise désormais le nombre réel d'applications et l'ouverture cible son écran principal, plutôt que sa tuile PiP. [Installation et configuration Twitch](../StreamPlus.md).
+
 ## Version 1.2 — Cissou's TV
 
 Le titre à l'écran et le nom de l'application sont désormais **Cissou's TV**. Le package reste `fr.local.voxelhome` pour mettre à jour sans effacer les données.

@@ -1,5 +1,16 @@
 # Validation sur appareil — à compléter
 
+## Stream+ et Cissou's TV 1.3 — 16 novembre 2026
+
+- StreamPlus compilé depuis le dépôt officiel HugoALVES7/StreamPlus, commit `2cc701c`, puis installé sur l'appareil Android API 28 : Success.
+- SHA256 de l'APK local final : `E62B897842FA9120F8E12BEB02389CA98E03E4B5EFB00C7730C1D31AF46B1EC5`.
+- Problème d'empaquetage Windows des chemins d'assets corrigé dans `build-streamplus.ps1`, sans changer le code de l'application tierce.
+- Cissou's TV mis à jour sans désinstallation, version 1.3 / code 4. Cinq cartes visibles sans débordement ; focus et bornes adaptés à cinq applications.
+- Stream+ ouvre son activité principale, pas la tuile PiP. Écran « Bienvenue sur Stream+ » et formulaire Client ID visibles sur la vraie TV.
+- Captures : `reports/cissou-streamplus.png` et `reports/streamplus-start.png`.
+- Compilation, signature APK et tests PowerShell validés. Aucune superposition ni accessibilité PiP ajoutée.
+- Connexion Twitch et lecture non validées : Client ID personnel requis et non fourni.
+
 ## Cissou's TV 1.2 — vérifié le 30 octobre 2026
 
 - Titre et nom de l'application remplacés par `Cissou's TV`, package inchangé.

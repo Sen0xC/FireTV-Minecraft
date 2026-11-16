@@ -22,7 +22,8 @@ class MainActivity : Activity() {
         "Stremio" to "com.stremio.one",
         "YouTube" to "com.amazon.firetv.youtube",
         "Crunchyroll" to "com.crunchyroll.crunchyroid",
-        "ADN" to "fr.anidn"
+        "ADN" to "fr.anidn",
+        "Stream+" to "com.hugo.streamplus"
     )
     private var landscape: Bitmap? = null
     private var selected = 0
@@ -79,7 +80,7 @@ class MainActivity : Activity() {
                 if (focus) { selected = index; status?.text = "OK : ouvrir $label" }
             }
             card.nextFocusLeftId = 100 + maxOf(0,index-1)
-            card.nextFocusRightId = 100 + minOf(3,index+1)
+            card.nextFocusRightId = 100 + minOf(apps.lastIndex,index+1)
             card.nextFocusDownId = 200
             row.addView(card, LinearLayout.LayoutParams(0, -1, 1f).apply {
                 if (index < apps.size-1) rightMargin = dp(12)
@@ -87,7 +88,7 @@ class MainActivity : Activity() {
             cards.add(card)
         }
         status = TextView(this).apply {
-            text = "OK : ouvrir ${apps[selected.coerceIn(0,3)].first}"
+            text = "OK : ouvrir ${apps[selected.coerceIn(0,apps.lastIndex)].first}"
             textSize = 14f; setTextColor(Color.WHITE)
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
             setPadding(0, dp(12), 0, dp(22))
@@ -101,7 +102,7 @@ class MainActivity : Activity() {
         }
         val amazon = makeButton("Accueil Amazon", 201) { amazonHome() }
         settings.nextFocusRightId = 201; amazon.nextFocusLeftId = 200
-        settings.nextFocusUpId = 100; amazon.nextFocusUpId = 103
+        settings.nextFocusUpId = 100; amazon.nextFocusUpId = 100 + apps.lastIndex
         footer.addView(settings, LinearLayout.LayoutParams(dp(230), dp(48)).apply { rightMargin = dp(12) })
         footer.addView(amazon, LinearLayout.LayoutParams(dp(210), dp(48)))
         val options = LinearLayout(this).apply { setPadding(0, dp(10), 0, 0) }
@@ -131,7 +132,7 @@ class MainActivity : Activity() {
         options.addView(animation, LinearLayout.LayoutParams(dp(230), dp(42)).apply { rightMargin = dp(12) })
         options.addView(boot, LinearLayout.LayoutParams(dp(210), dp(42)))
         setContentView(frame)
-        cards[selected.coerceIn(0,3)].requestFocus()
+        cards[selected.coerceIn(0,apps.lastIndex)].requestFocus()
     }
 
     private fun animationLabel() = "Feuilles : " + if (preferences.getBoolean("leaves", true)) "oui" else "non"
@@ -187,6 +188,11 @@ class MainActivity : Activity() {
     }
 
     private fun launchApp(pkg: String, label: String) {
+        // Stream+ expose aussi une tuile PiP : ouvrir explicitement son ecran principal.
+        if (pkg == "com.hugo.streamplus") {
+            openSafely(Intent(Intent.ACTION_MAIN).setClassName(pkg, "$pkg.MainActivity"), "Impossible d’ouvrir Stream+. Vérifie son installation.")
+            return
+        }
         // Requete TV explicite, puis repli sur l'activite standard si necessaire.
         val tv = Intent(Intent.ACTION_MAIN).addCategory("android.intent.category.LEANBACK_LAUNCHER").setPackage(pkg)
         val match = packageManager.queryIntentActivities(tv, 0).firstOrNull()
@@ -217,7 +223,7 @@ class MainActivity : Activity() {
         openSafely(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), "Appuie sur le bouton Accueil de la télécommande.")
     }
     override fun onBackPressed() {
-        if (homeHelperInstalled()) cards[selected.coerceIn(0,3)].requestFocus() else amazonHome()
+        if (homeHelperInstalled()) cards[selected.coerceIn(0,apps.lastIndex)].requestFocus() else amazonHome()
     }
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("selection", selected); super.onSaveInstanceState(outState)

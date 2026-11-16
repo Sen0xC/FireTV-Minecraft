@@ -3,14 +3,16 @@
     "com.stremio.one",
     "com.amazon.firetv.youtube",
     "com.crunchyroll.crunchyroid",
-    "fr.anidn"
+    "fr.anidn",
+    "com.hugo.streamplus"
   ],
   "uninstall": [],
   "labels": {
     "com.stremio.one": "Stremio",
     "com.amazon.firetv.youtube": "YouTube",
     "com.crunchyroll.crunchyroid": "Crunchyroll",
-    "fr.anidn": "ADN"
+    "fr.anidn": "ADN",
+    "com.hugo.streamplus": "Stream+"
   },
   "animationScale": null
 }
